@@ -102,6 +102,6 @@ def main():
 
         draw(screen)
 
-myField = Field(2)
+myField = Field(6)
 main()
 pygame.quit()
