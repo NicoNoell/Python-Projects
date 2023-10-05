@@ -59,7 +59,6 @@ class Field:
                     return
 
                 card.isRevealed = True
-                print("Card revealed")
                 if self.firstCard == 0:
                     self.firstCard = card
 
