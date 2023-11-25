@@ -269,6 +269,8 @@ def main():
                     if size > 10:
                         size -= 5
                     start()
+                elif event.key == pygame.K_BACKSPACE:
+                    start()
                     
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clickedType = myGraph.getTypeWhenClicked(event.pos)
@@ -285,11 +287,11 @@ def main():
                     myGraph.setTypeWhenClicked(event.pos, clickedType)
                     if AUTO_CALCULATE:
                         myGraph.finish()
-                        draw(screen)
+                    draw(screen)
             elif event.type == pygame.MOUSEBUTTONUP:
                 clickedType = None
 
-        if ANIMATION and not myGraph.finished:
+        if ANIMATION and not myGraph.finished and clickedType == None:
             myGraph.update()
             draw(screen)
 
