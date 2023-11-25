@@ -281,7 +281,7 @@ def main():
                 myGraph.setTypeWhenClicked(event.pos, clickedType)
                 if AUTO_CALCULATE:
                     myGraph.finish()
-                    draw(screen)
+                draw(screen)
             elif event.type == pygame.MOUSEMOTION:
                 if clickedType != None:
                     myGraph.setTypeWhenClicked(event.pos, clickedType)
