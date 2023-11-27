@@ -1,7 +1,7 @@
 import pygame, math
 
 pygame.init()
-screensize = width, height = 800, 600
+screensize = width, height = 800, 800
 screen = pygame.display.set_mode(screensize, pygame.RESIZABLE)
 uhr = pygame.time.Clock()
 
@@ -11,7 +11,7 @@ FRICTION_WALL = 0.9
 FRICTION_CONNECTION = 0.98
 MIN_CONNECTION_LENGTH = 20
 MAX_CONNECTION_LENGTH = 100
-STIFFNESS = 0.1
+STIFFNESS = 0.15
 
 points = []
 connections = []
