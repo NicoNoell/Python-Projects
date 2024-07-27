@@ -1,6 +1,17 @@
-import pygame, random
+import pygame
 
 pygame.init()
+
+# -- Adjustable Variables --
+
+DRAW_TEXT = False
+AUTO_CALCULATE = False
+ANIMATION = True
+SHOW_CHECKED_KNOTS = True
+ALLOW_DIAGONALS = True
+size = 10
+
+# -------- End -------------
 
 WALL = -1
 EMPTY = 0
@@ -10,13 +21,6 @@ CHECKABLE = 3
 CHECKED = 4
 PATH = 5
 
-DRAW_TEXT = False
-AUTO_CALCULATE = False
-ANIMATION = True
-SHOW_CHECKED_KNOTS = True
-ALLOW_DIAGONALS = True
-size = 20
-
 if ALLOW_DIAGONALS:
     directions = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
 else:
@@ -24,6 +28,7 @@ else:
 
 screensize = x, y = 900, 900
 screen = pygame.display.set_mode(screensize, pygame.RESIZABLE)
+pygame.display.set_caption("A* Pathfinding")
 uhr = pygame.time.Clock()
 
 def drawText(screen, value, position, size = 25, color = [0, 0, 0]):
@@ -31,7 +36,7 @@ def drawText(screen, value, position, size = 25, color = [0, 0, 0]):
         text = font.render(str(value), True, color)
         screen.blit(text, position)
 
-class Knoten():
+class Knot():
     def __init__(self, position) -> None:
         self.type = EMPTY
         self.distanceToStart = None
@@ -91,7 +96,6 @@ class Knoten():
         else:
             self.distanceToEnd = difference[0] * 10 + difference[1] * 10
         
-
 class Graph():
     def __init__(self, size=(10,10), rect=(0, 0, x, y)) -> None:
         self.size = self.sizeX, self.sizeY = size
@@ -211,7 +215,7 @@ class Graph():
         for y in range(self.sizeY):
             row = []
             for x in range(self.sizeX):
-                row.append(Knoten((x, y)))
+                row.append(Knot((x, y)))
             self.knoten.append(row)
 
     def draw(self, screen):

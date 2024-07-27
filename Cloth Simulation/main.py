@@ -6,12 +6,12 @@ screen = pygame.display.set_mode(screensize, pygame.RESIZABLE)
 uhr = pygame.time.Clock()
 
 GRAVITY = 0.5
-POINTSX, POINTSY = 30, 10
+POINTSX, POINTSY = 50, 10
 FRICTION_WALL = 0.9
 FRICTION_CONNECTION = 0.98
 MIN_CONNECTION_LENGTH = 20
 MAX_CONNECTION_LENGTH = 100
-STIFFNESS = 0.15
+STIFFNESS = 0.2
 
 points = []
 connections = []
@@ -32,14 +32,14 @@ class Point():
             if self.pos[0] < 0:
                 self.pos[0] *= -1
                 self.v[0] *= -FRICTION_WALL
-            elif self.pos[0] > width:
-                self.pos[0] = width - (self.pos[0] - width)
+            elif self.pos[0] > screen.get_width():
+                self.pos[0] = screen.get_width() - (self.pos[0] - screen.get_width())
                 self.v[0] *= -FRICTION_WALL
             if self.pos[1] < 0:
                 self.pos[1] *= -1
                 self.v[1] *= -FRICTION_WALL
-            elif self.pos[1] > height:
-                self.pos[1] = height - (self.pos[1] - height)
+            elif self.pos[1] > screen.get_height():
+                self.pos[1] = screen.get_height() - (self.pos[1] - screen.get_height())
                 self.v[1] *= -FRICTION_WALL
 
     
@@ -62,19 +62,20 @@ class Connection():
         return min(max(0, self.diagonalDistance() - MIN_CONNECTION_LENGTH) / (MAX_CONNECTION_LENGTH - MIN_CONNECTION_LENGTH), 1)
 
     def checkIfLinesCollide(self, pos1, pos2):
+        if pos1 == pos2:
+            return False
         try:
-            x1, y1 = self.point1.pos
-            x2, y2 = self.point2.pos
-            x3, y3 = pos1
-            x4, y4 = pos2
-            line1_dx, line1_dy = x2 - x1, y2 - y1
-            line2_dx, line2_dy = x4 - x3, y4 - y3
-            m = (((x3-x1)/line1_dx) * (line1_dy/line2_dy)  -((y3-y1)/line2_dy))  /  (1-(line2_dx/line1_dx) * (line1_dy/line2_dy))
-            n = ((x3-x1)/line1_dx) + m * (line2_dx/line1_dx)
-            if m < 0 or m > 1 or n < 0 or n > 1:
-                return False
-            return True
-        except:
+            Ax, Ay = self.point1.pos
+            Bx, By = self.point2.pos
+            Cx, Cy = pos1
+            Dx, Dy = pos2
+            # Just accept this black magic. I've derived it myself and it works and I will never touch this again :)
+            r = ((Ax - Cx) - (((Ay - Cy) * (Dx - Cx))/(Dy - Cy))) / ((((By - Ay) * (Dx - Cx))/(Dy - Cy)) - (Bx - Ax))
+            s = (((Ay - Cy) + r * (By - Ay))/(Dy - Cy))
+            if r >= 0 and r <= 1 and s >= 0 and s <= 1:
+                return True
+            return False
+        except Exception as e:
             return False
     
     def update(self):
@@ -151,7 +152,6 @@ def main():
                 for c in connections:
                     if c.checkIfLinesCollide(lastMousePos, event.pos):
                        connections.remove(c)
-                       pass
                 lastMousePos = event.pos
             elif event.type == pygame.MOUSEBUTTONUP:
                 if lastMousePos == None:
