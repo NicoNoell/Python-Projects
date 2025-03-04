@@ -7,6 +7,7 @@ FRICTION = 0.98
 FRICTION_THRESHOLD = 1 # Speed required for friction to be applied
 BOOST = 0.2
 BOOST_THRESHOLD = 0.1
+FISHSCALING = 1.25
 
 def vectorLength(vector2d):
     return math.sqrt(vector2d[0]**2 + vector2d[1]**2)
@@ -139,18 +140,18 @@ class Fish():
         self.rot = self.getRot()
 
 class Boid():
-    def __init__(self, screensize, size, color = [150, 150, 255], fishsize = 1, centerForce = 1, velForce = 1, pushAwayStrength = 1, pushAwayDistance = 40, viewwidth = 1, viewlength = 300, friction = FRICTION):
+    def __init__(self, screensize, size, color = [150, 150, 255], fishsize = FISHSCALING*1, centerForce = FISHSCALING*1, velForce = FISHSCALING*1, pushAwayStrength = FISHSCALING*1, pushAwayDistance = FISHSCALING*40, viewwidth = 1, viewlength = FISHSCALING*300, friction = FRICTION):
         self.fishes = []
         self.screensize = screensize
         self.size = size
         self.color = color
-        self.fishsize = fishsize
+        self.fishsize = FISHSCALING*fishsize
         self.centerForce = centerForce
         self.velForce = velForce
         self.pushAwayStrength = pushAwayStrength
-        self.pushAwayDistance = pushAwayDistance
+        self.pushAwayDistance = FISHSCALING*pushAwayDistance
         self.viewwidth = viewwidth
-        self.viewlength = viewlength
+        self.viewlength = FISHSCALING*viewlength
         self.friction = friction
 
         self.createFishes()
@@ -177,12 +178,16 @@ def updateBoid(boid):
 class MainClass():
     def __init__(self):
         pygame.init()
-        self.screensize = self.width, self.height = 900, 600
+        self.screensize = self.width, self.height = 2080, 1200
         self.screen = pygame.display.set_mode(self.screensize, pygame.RESIZABLE)
         self.uhr = pygame.time.Clock()
 
         self.boids = []
 
+        self.setup()
+
+    def reset(self):
+        self.boids = []
         self.setup()
 
     def draw(self):
@@ -210,6 +215,9 @@ class MainClass():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     active = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        self.reset()
             
             self.update(pool)
             self.draw()
