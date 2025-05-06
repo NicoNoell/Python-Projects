@@ -19,7 +19,7 @@ A* ("A-Star") pathfinding is a popular and especially efficient Algorithm for co
 
 <img src="Images/A-Star-Demo.gif" alt="A Star Algorithm Demo" width="70%">
 
-(The number in the top-left referst to the estimated distance to the end and the number in the top-right is the slowly discovered distance to the start)
+(The number in the top-left refers to the estimated distance to the end and the number in the top-right is the slowly discovered distance to the start)
 
 **4.** Once you've reached the goal, you need to **backtrack to the start** to reconstruct the actual path taken. This is done by starting at the end node and always choosing the neighboring node with the lowest distance to the start. You could alternatively just keep track of where each node has its distance to start from, which is the typical way to do this, but I used the first method.
 
@@ -28,7 +28,7 @@ If a graph has edges with negative weights, the algorithm cannot gurantee to hav
 
 ### Further Resources
 I have also described the algorithm on my website and made a video about it. If your interested with further engaging with the topic, see the following links:
-- [The A* Pathfinding Algorithm (Wikipedia)]("https://en.wikipedia.org/wiki/A*_search_algorithm)
+- [The A* Pathfinding Algorithm (Wikipedia)](https://en.wikipedia.org/wiki/A*_search_algorithm)
 - [A* explained on my website with code-samples](https://niconoell.github.io/projects/projects.html)
 - [My Video about it (Youtube)](https://www.youtube.com/watch?v=B5ITrAc1kEo)
 
