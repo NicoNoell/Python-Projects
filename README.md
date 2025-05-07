@@ -34,5 +34,24 @@ I have also described the algorithm on my website and made a video about it. If 
 
 
 ## Boids Simulation [↗](https://github.com/NicoNoell/Python-Projects/tree/main/Boids)
+This Boids Simulation is refering to the simulation of the swarm behavoir of fish or a flock of birds. It's really fun to watch :).
+
+### How it works:
+The simulation itself isn't very complicated, as the swarm behavior emerges from the following three very basic rules:
+
+**1.** A boid always tries to move into the center of the flock in its field of view (FOV). \
+**2.** A boid get's pushed away from its peers it if gets too close.\
+**3.** A boid tries to match the average velocity and direction of other boids in its FOV.
+
+By simply applying those rules (and a force pulling them into the window) in the right balance and with a slight tweak for each swarm (indicated by a different color), you get something that looks like the following:
+
+<img src="Images/Boids-Demo.png" alt="Boids Simulation Demo" width="70%">
+<br><br>
+Something I personally really like is observing the general patterns in which those flocks move. The purple ones for example tend to form a fast line, whereas the pink boids often stay in a denser swarm. Blue is something in between, green speeds through the window every now and then and orange likes to keep its distance. 
+
+### Further Resources
+If you're interested, there's tons of interesting things people have done similar to this and a quick google search can have you hooked for a few hours. Still, here are some links that might be helpful:
+- [Boids (Wikipedia)](https://en.wikipedia.org/wiki/Boids)
+- [A Web demonstration by Ben Eater with adjustable parameters](https://eater.net/boids)
 
 ## Cloth Simulation [↗](https://github.com/NicoNoell/Python-Projects/tree/main/Cloth%20Simulation)
